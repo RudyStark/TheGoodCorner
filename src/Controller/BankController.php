@@ -18,7 +18,8 @@ class BankController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, BankRepository $bankRepository): Response
     {
 	    $bank = new Bank();
-		$user = $this->getUser();
+		//on récupére l'utilisateur connecté
+	    $user = $this->getUser();
 
 	    $form = $this->createForm(BankType::class, $bank);
 	    $form->handleRequest($request);
@@ -37,7 +38,7 @@ class BankController extends AbstractController
 	    }
 
 	    return $this->render('bank/index.html.twig', [
-		    'banks' => $bankRepository->findAll(),
+		    'banks' => $bankRepository->findBy(['user' => $user->getId()]),
 		    'form' => $form->createView(),
 	    ]);
     }

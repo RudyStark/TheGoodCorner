@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos annonces{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center mb-5">Vos Annonces</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                {% if annonces|length > 0 %}
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col">Visible</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for annonce in annonces %}
+                            <tr>
+                                <td>{{ annonce.name }}</td>
+                                <td>{{ annonce.description }}</td>
+                                <td>{{ annonce.price }}</td>
+                                <td>{{ annonce.isVisible ? 'Yes' : 'No' }}</td>
+                                <td>
+                                    <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}">afficher</a>
+                                    {{ include('annonce/_delete_form.html.twig') }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-muted text-center">Aucune annonce pour le moment.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="{{ path('app_annonce_new') }}" class="btn btn-success float-right mt-3">Créer une nouvelle annonce</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

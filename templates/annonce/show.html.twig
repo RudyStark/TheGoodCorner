@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonce{% endblock %}
+
+{% block body %}
+    <h1>Annonce</h1>
+
+    <div class="card mb-3">
+        <h3 class="card-header">{{ annonce.name }}</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+            <rect width="100%" height="100%" fill="#868e96"></rect>
+            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">NO PHOTO</text>
+        </svg>
+        <div class="card-body">
+            <p class="card-text">{{ annonce.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ annonce.price }} €</li>
+        </ul>
+        <div class="card-body">
+            {% if is_granted('ROLE_USER') %}
+            <a href="#" class="card-link h5">Acheter</a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="card-link h5">Connectez-vous pour acheter</a>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
+    <div class="container">
+    <div class="row">
+        <div class="col-4 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+            {% for comment in annonce.commentaries %}
+                <div class="card card-white post">
+                    <div class="post-heading">
+                        <div class="float-left image">
+                            <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                        </div>
+                        <div class="float-left meta">
+                            <div class="title h5">
+
+                                <a href="#"><b>{{ comment.user.pseudo }} </b></a>
+                                made a post.
+                            </div>
+                            <h6 class="text-muted time"></h6>
+                        </div>
+                    </div>
+                    <div class="post-description">
+                        <p>{{ comment.text }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% if is_granted('ROLE_USER') %}
+        <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+            <div id="algin-form">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    <h4>Laisser un commentaire</h4>
+                    {{ form_widget(form.text) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            {% else %}
+                <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+                    <div id="algin-form">
+                        <h4>Connectez-vous pour laisser un commentaire</h4>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <a href="{{ path('app_home') }}" class="btn btn-secondary">Retour</a>
+
+{#    Si l'utilisateur est le proprietaire de l'annonce#}
+    {% if is_granted('ROLE_USER') and annonce.user == app.user %}
+        <a href="{{ path('app_annonce_edit', {'id': annonce.id}) }}">edit</a>
+        {{ include('annonce/_delete_form.html.twig') }}
+    {% endif %}
+
+{% endblock %}

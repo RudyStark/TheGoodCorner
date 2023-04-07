@@ -27,10 +27,14 @@ class UserController extends AbstractController
 		//On récupère les addresses de l'utilisateur
 		$addresses = $this->getUser()->getAddresses();
 
+		//Annonce de l'utilisateur
+		$annonces = $this->getUser()->getAnnonces();
+
 		return $this->render('user/profile.html.twig', [
 			'user' => $user,
 			'bank' => $bank,
-			'addresses' => $addresses
+			'addresses' => $addresses,
+			'annonces' => $annonces
 		]);
 	}
 }

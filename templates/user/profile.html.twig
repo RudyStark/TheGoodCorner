@@ -78,13 +78,13 @@
                 </div>
             </div>
     </section>
-    <!-- Section "Mon solde" -->
+    <!-- Section "Mes achats" -->
     <section class="mb-4">
         <h2 class="h5">Mes achats</h2>
             <div class="card h-100 max-height-300">
                 <div class="card-body">
                     <p>Votre dernier achat:</p>
-                    <a href="#" class="btn btn-primary">Voir tout</a>
+                    <a href="" class="btn btn-primary">Voir tout</a>
                 </div>
             </div>
     </section>
@@ -92,10 +92,17 @@
     <section class="mb-4">
         <h2 class="h5">Mes annonces</h2>
             <div class="card mb-3 h-100 max-height-300">
-                <div class="card-body">
-                    <h3 class="card-title"></h3>
-                    <p class="card-text"></p>
-                    <a href="" class="btn btn-primary">Voir l'annonce</a>
+                <a href="{{ path('app_annonce_index', {'id': user.id}) }}" class="btn btn-primary">Gérer mes annonces</a>
+                <div class="card-body row">
+                    {% for annonce in user.annonces %}
+                        <div class="card text-white bg-dark mb-3" style="width: 10rem; height: 10rem; max-height: 10rem; max-width: 10rem">
+                            <div class="card-header">{{ annonce.name }}</div>
+                            <div class="card-body">
+                                <h4 class="card-title">{{ annonce.price }} €</h4>
+                                <p class="card-text">{{ annonce.description }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
     </section>

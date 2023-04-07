@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Address::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $addresses;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Annonce::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Annonce::class, cascade: ['persist'])]
     private Collection $annonces;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commentary::class)]
