@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BankController!{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <!-- Entête de la page -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3">Mon profil / Recharger mon solde</h1>
+            <a href="{{ path('app_user_profile') }}" class="btn btn-secondary">Retour</a>
+        </div>
+        <!-- Section "Mon solde" -->
+        <section class="mb-4">
+            <h2 class="h5">Mon solde</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card h-100 max-height-300">
+                        <div class="card-body">
+                            <h5 class="card-title">Votre solde actuel</h5>
+                            {% for bank in banks %}
+                                <div>
+                                        <p class="card-text">
+                                            {{ bank.amount }}€<br>
+                                        </p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 max-height-300">
+                        <div class="card-body">
+                            <h5 class="card-title">Réapprovisionner</h5>
+                            <div class="text-green card-text display-3 ">
+                                {{ form_start(form) }}
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            {{ form_widget(form.amount, { 'attr': {'class': 'form-control'} }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-success">Recharger</button>
+                                    </div>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Bank;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,11 +31,16 @@ class RegistrationController extends AbstractController
                 )
             );
 
+			// On ajoute 100€ sur le solde de l'utilisateur lors de l'inscription
+	        $bank = new Bank();
+			$bank->setAmount(100);
+			$bank->setUser($user);
+			$entityManager->persist($bank);
+
 			// Set the role
 	        $user->setRoles(['ROLE_USER']);
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_home');
         }

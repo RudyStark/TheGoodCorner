@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+{#    <div class="container">#}
+{#        <h2 class="text-center my-5">Vos informations</h2>#}
+{#        <div class="row">#}
+{#            <div class="col-md-4">#}
+{#                <div class="card mb-4 shadow-sm">#}
+{#                    <img class="card-img-top" src="" alt="">#}
+{#                    <div class="card-body">#}
+{#                        <h5 class="card-title">Votre solde actuel</h5>#}
+{#                        <p class="card-text">{{ user.pseudo }}</p>#}
+{#                        <div class="d-flex justify-content-between align-items-center">#}
+{#                            <small class="text-muted">{{ bank.amount }} €</small>#}
+{#                            <a href="" class="btn btn-sm btn-outline-primary">Réapprovisionner</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="row">#}
+{#            <div class="col-md-4">#}
+{#                <div class="card mb-4 shadow-sm">#}
+{#                    <img class="card-img-top" src="" alt="">#}
+{#                    <div class="card-body">#}
+{#                        <h5 class="card-title">Mes adresses</h5>#}
+{#                        <p class="card-text">{{ user.pseudo }}</p>#}
+{#                        <div class="d-flex justify-content-between align-items-center">#}
+{#                            <small class="text-muted">{{ bank.amount }} €</small>#}
+{#                            <a href="{{ path('app_address_index') }}" class="btn btn-sm btn-outline-primary">Gérer mes adresses</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+<div class="container mt-5">
+    <!-- Entête de la page -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3">Mon profil</h1>
+        <a href="#" class="btn btn-primary">Modifier</a>
+    </div>
+    <!-- Section "Mes Adresses" -->
+    <section class="mb-4">
+        <h2 class="h5">Mes adresses</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card h-100 max-height-300">
+                        <div class="card-body">
+                            <h5 class="card-title">Adresse de facturation</h5>
+                            {% for addresse in user.addresses %}
+                                <div>
+                                    {% if loop.index == 1 %}
+                                    <p class="card-text">
+                                        {{ addresse.street }}<br>
+                                        {{ addresse.zip }} {{ addresse.city }}<br>
+                                    </p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            <div class="display-3 mt-auto">
+                                <a href="{{ path('app_address_index', {'id': user.id}) }}" class="btn btn-primary">Gérer mes adresses</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 max-height-300">
+                        <div class="card-body">
+                            <h5 class="card-title">Mon solde</h5>
+                            <div class="text-green card-text display-3 ">
+                            {{ bank.amount }}€</div><br>
+                            <a href="{{ path('app_bank_index', {'id': user.id}) }}" class="btn btn-primary">Recharger mon solde</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- Section "Mon solde" -->
+    <section class="mb-4">
+        <h2 class="h5">Mes achats</h2>
+            <div class="card h-100 max-height-300">
+                <div class="card-body">
+                    <p>Votre dernier achat:</p>
+                    <a href="#" class="btn btn-primary">Voir tout</a>
+                </div>
+            </div>
+    </section>
+    <!-- Section "Mes annonces" -->
+    <section class="mb-4">
+        <h2 class="h5">Mes annonces</h2>
+            <div class="card mb-3 h-100 max-height-300">
+                <div class="card-body">
+                    <h3 class="card-title"></h3>
+                    <p class="card-text"></p>
+                    <a href="" class="btn btn-primary">Voir l'annonce</a>
+                </div>
+            </div>
+    </section>
+</div>
+
+{% endblock %}

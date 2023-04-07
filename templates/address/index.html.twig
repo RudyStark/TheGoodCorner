@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Address index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center mb-5">Address Index</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                {% if addresses|length > 0 %}
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Street</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Zip</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for address in addresses %}
+                            <tr>
+                                <td>{{ address.street }}</td>
+                                <td>{{ address.city }}</td>
+                                <td>{{ address.zip }}</td>
+                                <td>
+                                    <a href="{{ path('app_address_edit', {'id': address.id}) }}" class="btn btn-primary mr-2">Edit</a>
+                                    <a href="{{ path('app_address_delete', {'id': address.id}) }}"  class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-muted text-center">No records found.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="{{ path('app_address_new') }}" class="btn btn-success float-right mt-3">Create new</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
