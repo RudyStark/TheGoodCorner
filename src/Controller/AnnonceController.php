@@ -101,4 +101,21 @@ class AnnonceController extends AbstractController
 
         return $this->redirectToRoute('app_annonce_index', [], Response::HTTP_SEE_OTHER);
     }
+
+	#[Route('/toggle/{id}', name: 'annonce_toggle', methods: ['POST'])]
+	public function toggle(string $id, Annonce $annonce, AnnonceRepository $annonceRepository, EntityManagerInterface $entityManager): Response
+	{
+		$annonce = $annonceRepository->find($id);
+
+		if (!$annonce) {
+			throw $this->createNotFoundException('Annonce non trouvée');
+		}
+
+		$annonce->setIsVisible(!$annonce->isIsVisible());
+
+		$entityManager->persist($annonce);
+		$entityManager->flush();
+
+		return $this->redirectToRoute('app_annonce_index');
+	}
 }

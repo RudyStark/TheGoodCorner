@@ -19,7 +19,7 @@
         </ul>
         <div class="card-body">
             {% if is_granted('ROLE_USER') %}
-            <a href="#" class="card-link h5">Acheter</a>
+            <a href="{{ path('app_acquisition_order-details', {'id': annonce.id}) }}" class="card-link h5">Acheter</a>
             {% else %}
                 <a href="{{ path('app_login') }}" class="card-link h5">Connectez-vous pour acheter</a>
             {% endif %}

@@ -28,7 +28,12 @@
                                 <td>{{ annonce.name }}</td>
                                 <td>{{ annonce.description }}</td>
                                 <td>{{ annonce.price }}</td>
-                                <td>{{ annonce.isVisible ? 'Yes' : 'No' }}</td>
+                                <td>{{ annonce.isVisible ? 'Yes' : 'No' }}
+{#                                    <form class="custom-control custom-switch" method="POST" action="{{ path('annonce_toggle', {'id': annonce.id}) }}">#}
+{#                                    <input type="checkbox" class="custom-control-input" id="customSwitches">#}
+{#                                    <a href="{{ path('annonce_toggle', {'id': annonce.id}) }}" class="custom-control-label" for="customSwitches"></a>#}
+{#                                    </form>#}
+                                </td>
                                 <td>
                                     <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}">afficher</a>
                                     {{ include('annonce/_delete_form.html.twig') }}
