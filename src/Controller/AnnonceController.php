@@ -92,7 +92,7 @@ class AnnonceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_annonce_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_annonce_delete', methods: ['POST'])]
     public function delete(Request $request, Annonce $annonce, AnnonceRepository $annonceRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$annonce->getId(), $request->request->get('_token'))) {
@@ -102,20 +102,11 @@ class AnnonceController extends AbstractController
         return $this->redirectToRoute('app_annonce_index', [], Response::HTTP_SEE_OTHER);
     }
 
-	#[Route('/toggle/{id}', name: 'annonce_toggle', methods: ['POST'])]
-	public function toggle(string $id, Annonce $annonce, AnnonceRepository $annonceRepository, EntityManagerInterface $entityManager): Response
+	#[Route('toggle_visibility/{id}', name: 'app_annonce_toggle_visibility', methods: ['POST'])]
+	public function toggleVisibility(Annonce $annonce, EntityManagerInterface $entityManager): Response
 	{
-		$annonce = $annonceRepository->find($id);
-
-		if (!$annonce) {
-			throw $this->createNotFoundException('Annonce non trouvée');
-		}
-
-		$annonce->setIsVisible(!$annonce->isIsVisible());
-
-		$entityManager->persist($annonce);
+		$annonce->setisVisible(!$annonce->isIsVisible());
 		$entityManager->flush();
-
-		return $this->redirectToRoute('app_annonce_index');
+		return $this->redirectToRoute('app_annonce_show', ['id' => $annonce->getId()]);
 	}
 }

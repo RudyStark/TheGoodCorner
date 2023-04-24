@@ -84,6 +84,16 @@
             <div class="card h-100 max-height-300">
                 <div class="card-body">
                     <p>Votre dernier achat:</p>
+                    {% for acquisition in user.acquisitions %}
+                    <div class="card text-white bg-dark mb-3" style="width: 10rem; height: 10rem; max-height: 10rem; max-width: 10rem">
+                        <div class="card-header">{{ acquisition.annonce.name }}</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ acquisition.annonce.price }} €</h4>
+                            <p class="card-text">{{ acquisition.address.street }}</p>
+
+                        </div>
+                    </div>
+                    {% endfor %}
                     <a href="" class="btn btn-primary">Voir tout</a>
                 </div>
             </div>

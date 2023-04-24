@@ -8,11 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class UserController extends AbstractController
 {
 	/**
-	 * @param User $user
-	 * @param Bank $bank
 	 * @return Response
 	 */
 	#[Route('/profil', name: 'app_user_profile')]
@@ -30,11 +29,15 @@ class UserController extends AbstractController
 		//Annonce de l'utilisateur
 		$annonces = $this->getUser()->getAnnonces();
 
+		//Acquisition de l'utilisateur
+		$acquisitions = $this->getUser()->getAcquisitions();
+
 		return $this->render('user/profile.html.twig', [
 			'user' => $user,
 			'bank' => $bank,
 			'addresses' => $addresses,
-			'annonces' => $annonces
+			'annonces' => $annonces,
+			'acquisitions' => $acquisitions
 		]);
 	}
 }

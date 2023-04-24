@@ -27,10 +27,11 @@ class AcquisitionController extends AbstractController
 	public function orderDetails(AnnonceRepository $annonceRepository, Request $request, EntityManagerInterface $entityManager): Response
 	{
 		//on récupère l'annonce
-		$annonce = $annonceRepository->findby(['user' => $this->getUser()->getId()]);
+		$annonce = $annonceRepository->findOneBy(['id' => $request->attributes->get('id')]);
 		//on récupère l'utilisateur
 		$user = $this->getUser();
 
+		//Ajouter une acquisition
 		$acquisition = new Acquisition();
 		$form = $this->createForm(AcquisitionType::class, $acquisition, ['user' => $user]);
 		$form->handleRequest($request);
@@ -39,6 +40,18 @@ class AcquisitionController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 			$acquisition->setUser($this->getUser());
 			$acquisition->setAnnonce($annonce);
+
+			//On déduis le montant de l'annonce du solde de l'utilisateur sinon on envoi un message d'erreur si le montant n'est pas suffisant
+			if ($user->getBank() >= $annonce->getPrice()) {
+				$userBank = $user->getBank();
+				$newBankAmount = $userBank->getAmount() - $annonce->getPrice();
+				$userBank->setAmount($newBankAmount);
+				$user->setBank($userBank);
+				$entityManager->persist($user);
+			} else {
+				$this->addFlash('danger', 'Vous n\'avez pas assez d\'argent sur votre compte pour effectuer cette transaction');
+				return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
+			}
 			$entityManager->persist($acquisition);
 			$entityManager->flush();
 

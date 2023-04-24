@@ -13,7 +13,8 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(AnnonceRepository $annonceRepository): Response
     {
-		$annonces = $annonceRepository->findAll();
+		// on affiche les annonces avec is_visible = true
+	    $annonces = $annonceRepository->findBy(['is_visible' => true]);
         return $this->render('home/index.html.twig', [
             'annonces' => $annonces
         ]);

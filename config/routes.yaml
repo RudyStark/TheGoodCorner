@@ -3,3 +3,9 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+app_annonce_toggle_visibility:
+    path: /annonce/toggle_visibility/{id}
+    controller: App\Controller\AnnonceController::toggleVisibility
+    methods: [POST]
+    requirements:
+        id: '\d+'
